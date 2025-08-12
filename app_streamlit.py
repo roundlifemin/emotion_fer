@@ -29,8 +29,8 @@ def predict_face_rgb(rgb):
     idx = int(prob.argmax())
     return CLASSES[idx], float(prob[idx]), prob
 
-def draw_boxes(bgr, boxes, labels):
-    for (x,y,w,h,lab,conf) in labels:
+def draw_boxes(bgr,  labels):
+      for (x,y,w,h,lab,conf) in labels:
         cv2.rectangle(bgr, (x,y), (x+w,y+h), (0,255,0), 2)
         cv2.putText(bgr, f"{lab} {conf:.2f}", (x, y-8),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,255,0), 2)
