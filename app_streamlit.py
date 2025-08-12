@@ -78,18 +78,19 @@ with tab2:
         boxes = detect_faces_bgr(bgr)
 
         labels = []
-        if len(boxes) == 0:
+        if len(boxes)==0:
             lab, conf, prob = predict_face_rgb(rgb)
             st.write(f"예측: **{lab}** (conf={conf:.2f})")
-            st.bar_chart({c: p for c, p in zip(CLASSES, prob)})
+            st.bar_chart({c: p for c,p in zip(CLASSES, prob)})
             st.image(pil, caption="입력 이미지", use_container_width=True)
         else:
-            for (x, y, w, h) in boxes:
-                face_rgb = rgb[y:y + h, x:x + w]
+            for (x,y,w,h) in boxes:
+                face_rgb = rgb[y:y+h, x:x+w]
                 lab, conf, prob = predict_face_rgb(face_rgb)
-                labels.append((x, y, w, h, lab, conf, prob))
-                st.write(f"얼굴 ({x},{y}): **{lab}** (conf={conf:.2f})")
-                st.bar_chart({c: p for c, p in zip(CLASSES, prob)})
+                labels.append((x,y,w,h,lab,conf))
+            out = draw_boxes(bgr.copy(), labels)
+            st.image(cv2.cvtColor(out, cv2.COLOR_BGR2RGB),
+                     caption="검출/예측 결과", use_container_width=True)
 
             out = draw_boxes(bgr.copy(), labels)
             st.image(cv2.cvtColor(out, cv2.COLOR_BGR2RGB),
