@@ -6,4 +6,4 @@ pillow
 streamlit
 matplotlib
 scikit-learn
-opencv-python-headless
+opencv-python-headless  # libGL 문제 피하려면 headless
